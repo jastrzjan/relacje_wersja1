@@ -43,7 +43,7 @@ def run_trial(n):
                           arrow_long=config['ARROW_LONG'], arrow_width=config['ARROW_WIDTH'],
                           arrow_color=config['ARROW_COLOR'])
     stim_time = config['CONST_TIME'] + trial.n_relations * config['LEVEL_TIME']
-    acc = 0
+    acc = None
     rt = -1
     answer_type = None
     window.callOnFlip(response_clock.reset)
@@ -60,7 +60,7 @@ def run_trial(n):
             rt = response_clock.getTime()
             idx = KEYS.index(keys[0])
             answer_type = trial.answers[idx].name
-            acc = 1 if answer_type == 'answer' else -1
+            acc = 1 if answer_type == 'answer' else 0
             break
 
     trial.set_auto_draw(False)
@@ -86,6 +86,12 @@ response_clock = core.Clock()
 # TRAINING
 # show_info(window, join('.', 'messages', "instruction1.txt"),text_size=config['TEXT_SIZE'], screen_width=SCREEN_RES[0])
 show_image(window, 'instruction.png', SCREEN_RES)
+show_image(window, 'instruction_example.png', SCREEN_RES)
+show_image(window, 'instruction_example2.png', SCREEN_RES)
+
+pos_feedb = visual.TextStim(window, text=u'Poprawna odpowied\u017A', color='black', height=40)
+neg_feedb = visual.TextStim(window, text=u'Niepoprawna odpowied\u017A', color='black', height=40)
+no_feedb = visual.TextStim(window, text=u'Nie udzieli\u0142e\u015B odpowiedzi', color='black', height=40)
 
 i = 1
 for elem in config['TRAINING_TRIALS']:
@@ -94,9 +100,19 @@ for elem in config['TRAINING_TRIALS']:
         acc, rt, stim_time, n, answer_type = run_trial(n=elem['level'])
         RESULTS.append([i, 0, acc, rt, stim_time, n, 0, 0, answer_type])
         i += 1
-
+    ### FEEDBACK
+        if acc == 1:
+            feedb_msg = pos_feedb
+        elif acc == 0:
+            feedb_msg = neg_feedb
+        else:
+            feedb_msg = no_feedb
+        for _ in range(100):
+            feedb_msg.draw()
+            check_exit()
+            window.flip()
 # EXPERIMENT
-show_info(window, join('.', 'messages', "instruction2.txt"), text_size=config['TEXT_SIZE'], screen_width=SCREEN_RES[0])
+show_image(window, 'instruction2.png', SCREEN_RES)
 
 
 experiment = NUpNDown(start_val=config['START_LEVEL'], max_revs=config['MAX_REVS'],
@@ -118,5 +134,7 @@ for i, soa in enumerate(experiment, i):
     RESULTS.append([i, 1, acc, rt, stim_time, n, reversal, rev_count_val, answer_type])
     experiment.set_corr(acc)
 
+    if rev_count_val == config['MAX_REVS']:
+        break
 
 show_info(window, join('.', 'messages', "end.txt"), text_size=config['TEXT_SIZE'], screen_width=SCREEN_RES[0])

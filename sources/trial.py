@@ -29,6 +29,21 @@ class Trial:
         self.matrix_wrong_1.figures = perm[2]
         self.matrix_wrong_1.change_relation(1)
 
+
+        if self.n_relations < 2:
+            self.matrix_wrong_2 = deepcopy(self.matrix_main)
+            self.matrix_wrong_2.name = "wrong_2"
+            self.matrix_wrong_2.figures = perm[3]
+            self.matrix_wrong_2.change_relation(1)
+        else:
+            while True:
+                self.matrix_wrong_2 = deepcopy(self.matrix_main)
+                self.matrix_wrong_2.name = "wrong_2"
+                self.matrix_wrong_2.figures = perm[3]
+                self.matrix_wrong_2.change_relation(1)
+                if self.matrix_wrong_2.relations != self.matrix_wrong_1.relations:
+                        break
+
         # while True:
         #     self.matrix_wrong_2 = deepcopy(self.matrix_main)
         #     self.matrix_wrong_2.name = "wrong_2"
@@ -37,12 +52,14 @@ class Trial:
         #     if self.matrix_wrong_2.relations != self.matrix_wrong_1.relations:
         #         break
 
-        self.matrix_wrong_3 = deepcopy(self.matrix_main)
-        self.matrix_wrong_3.name = "wrong_2"
-        self.matrix_wrong_3.figures = perm[4]
-        self.matrix_wrong_3.change_relation(2)
+        #
+        #     self.matrix_wrong_3 = deepcopy(self.matrix_main)
+        #     self.matrix_wrong_3.name = "wrong_2"
+        #     self.matrix_wrong_3.figures = perm[4]
+        #     self.matrix_wrong_3.change_relation(2)
 
-        self.answers = [self.matrix_wrong_1, self.matrix_wrong_3, self.matrix_answer]
+
+        self.answers = [self.matrix_wrong_1, self.matrix_wrong_2, self.matrix_answer]
         np.random.shuffle(self.answers)
 
     def prepare_to_draw(self, win, main_fig_size, main_move_y, answers_fig_size, answers_move_y, fig_offset,
@@ -54,7 +71,7 @@ class Trial:
                                 arrow_long, arrow_width, arrow_color)
 
     def set_auto_draw(self, draw=True):
-        for matrix in [self.matrix_main, self.matrix_answer, self.matrix_wrong_1, self.matrix_wrong_3]:
+        for matrix in [self.matrix_main, self.matrix_answer, self.matrix_wrong_1, self.matrix_wrong_2]:
             matrix.set_auto_draw(draw)
 
     def get_info(self):
