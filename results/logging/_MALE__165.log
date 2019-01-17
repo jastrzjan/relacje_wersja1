@@ -1,5 +1,0 @@
-3.9653 	INFO 	Screen res set as: 1920x1080
-3.9662 	INFO 	Loaded monitor calibration from ['2018_09_18 09:28']
-4.5859 	EXP 	Created window1 = Window(allowGUI=True, allowStencil=False, args=UNKNOWN, autoLog=True, bitsMode=UNKNOWN, blendMode='avg', color='Gainsboro', colorSpace='named', fullscr=UNKNOWN, gamma=None, kwargs=UNKNOWN, lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x7f5ee4078f60>, multiSample=False, name='window1', numSamples=2, pos=None, screen=0, size=array([1920, 1080]), stereo=False, units='pix', useFBO=False, useRetina=False, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pygame')
-4.5859 	INFO 	Detected framerate: 30 frames per sec.
-4.5860 	INFO 	Mouse: using default window

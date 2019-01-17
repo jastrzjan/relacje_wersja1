@@ -29,35 +29,24 @@ class Trial:
         self.matrix_wrong_1.figures = perm[2]
         self.matrix_wrong_1.change_relation(1)
 
-
-        if self.n_relations < 2:
-            self.matrix_wrong_2 = deepcopy(self.matrix_main)
-            self.matrix_wrong_2.name = "wrong_2"
-            self.matrix_wrong_2.figures = perm[3]
-            self.matrix_wrong_2.change_relation(1)
-        else:
+        if self.n_relations == 6:
             while True:
                 self.matrix_wrong_2 = deepcopy(self.matrix_main)
                 self.matrix_wrong_2.name = "wrong_2"
                 self.matrix_wrong_2.figures = perm[3]
                 self.matrix_wrong_2.change_relation(1)
                 if self.matrix_wrong_2.relations != self.matrix_wrong_1.relations:
-                        break
-
-        # while True:
-        #     self.matrix_wrong_2 = deepcopy(self.matrix_main)
-        #     self.matrix_wrong_2.name = "wrong_2"
-        #     self.matrix_wrong_2.figures = perm[3]
-        #     self.matrix_wrong_2.change_relation(1)
-        #     if self.matrix_wrong_2.relations != self.matrix_wrong_1.relations:
-        #         break
-
-        #
-        #     self.matrix_wrong_3 = deepcopy(self.matrix_main)
-        #     self.matrix_wrong_3.name = "wrong_2"
-        #     self.matrix_wrong_3.figures = perm[4]
-        #     self.matrix_wrong_3.change_relation(2)
-
+                    break
+        elif self.n_relations in [1, 5]:
+            self.matrix_wrong_2 = deepcopy(self.matrix_main)
+            self.matrix_wrong_2.name = "wrong_2"
+            self.matrix_wrong_2.figures = perm[3]
+            self.matrix_wrong_2.change_destination(1)
+        elif self.n_relations in [2, 3, 4]:
+            self.matrix_wrong_2 = deepcopy(self.matrix_main)
+            self.matrix_wrong_2.name = "wrong_2"
+            self.matrix_wrong_2.figures = perm[3]
+            self.matrix_wrong_2.change_destination(2)
 
         self.answers = [self.matrix_wrong_1, self.matrix_wrong_2, self.matrix_answer]
         np.random.shuffle(self.answers)

@@ -73,7 +73,7 @@ def run_trial(n):
 config = load_config()
 
 SCREEN_RES = get_screen_res()
-window = visual.Window(SCREEN_RES, fullscr=True, monitor='testMonitor', units='pix',
+window = visual.Window(SCREEN_RES, fullscr=False, monitor='testMonitor', units='pix',
                        screen=0, color='Gainsboro', winType='pygame')
 FRAMES_PER_SEC = get_frame_rate(window)
 mouse = event.Mouse(visible=False)
@@ -95,7 +95,6 @@ no_feedb = visual.TextStim(window, text=u'Nie udzieli\u0142e\u015B odpowiedzi', 
 
 i = 1
 for elem in config['TRAINING_TRIALS']:
-    print(elem)
     for trail in range(elem['n_trails']):
         acc, rt, stim_time, n, answer_type = run_trial(n=elem['level'])
         RESULTS.append([i, 0, acc, rt, stim_time, n, 0, 0, answer_type])
@@ -112,6 +111,7 @@ for elem in config['TRAINING_TRIALS']:
             check_exit()
             window.flip()
 # EXPERIMENT
+window.flip()
 show_image(window, 'instruction2.png', SCREEN_RES)
 
 
